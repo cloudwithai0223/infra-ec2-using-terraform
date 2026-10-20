@@ -51,7 +51,8 @@ pipeline {
             echo 'Pipeline failed. Check Console Output.'
         }
     }
-    stage('Verify AWS Connection') {
+    stages{
+        stage('Verify AWS Connection') {
     steps {
         withCredentials([[
             $class: 'AmazonWebServicesCredentialsBinding',
@@ -61,4 +62,6 @@ pipeline {
         }
     }
 }
+}
+    
 }
