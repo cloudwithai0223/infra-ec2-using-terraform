@@ -56,7 +56,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
-  user_data = file("ecom-webpage.sh")
+  user_data     = file("ecom-webpage.sh")
   instance_type = var.instance_type
   key_name      = aws_key_pair.my_key.key_name
   vpc_security_group_ids = [
