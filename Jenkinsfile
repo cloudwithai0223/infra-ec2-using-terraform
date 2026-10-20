@@ -51,4 +51,14 @@ pipeline {
             echo 'Pipeline failed. Check Console Output.'
         }
     }
+    stage('Verify AWS Connection') {
+    steps {
+        withCredentials([[
+            $class: 'AmazonWebServicesCredentialsBinding',
+            credentialsId: 'aws-terraform-creds'
+        ]]) {
+            bat 'aws sts get-caller-identity'
+        }
+    }
+}
 }
