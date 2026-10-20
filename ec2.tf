@@ -27,6 +27,13 @@ resource "aws_security_group" "my-security-group" {
     description = "This secure port"
   }
   ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "This secure port"
+  }
+  ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
