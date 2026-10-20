@@ -1,4 +1,4 @@
-
+```groovy
 pipeline {
     agent any
 
@@ -9,6 +9,7 @@ pipeline {
 
     environment {
         TF_IN_AUTOMATION = 'true'
+        AWS_DEFAULT_REGION = 'ap-south-1'
     }
 
     stages {
@@ -21,6 +22,17 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 bat 'terraform init -input=false'
+            }
+        }
+
+        stage('Verify AWS Connection') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-terraform-creds'
+                ]]) {
+                    bat 'aws sts get-caller-identity'
+                }
             }
         }
 
@@ -38,7 +50,12 @@ pipeline {
 
         stage('Plan Only') {
             steps {
-                bat 'terraform plan -input=false'
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-terraform-creds'
+                ]]) {
+                    bat 'terraform plan -input=false'
+                }
             }
         }
     }
@@ -47,21 +64,13 @@ pipeline {
         success {
             echo 'Terraform validation and plan completed successfully.'
         }
+
         failure {
             echo 'Pipeline failed. Check Console Output.'
         }
-    }
-    stages{
-        stage('Verify AWS Connection') {
-    steps {
-        withCredentials([[
-            $class: 'AmazonWebServicesCredentialsBinding',
-            credentialsId: 'aws-terraform-creds'
-        ]]) {
-            bat 'aws sts get-caller-identity'
+
+        aborted {
+            echo 'Pipeline was aborted.'
         }
     }
-}
-}
-    
 }
