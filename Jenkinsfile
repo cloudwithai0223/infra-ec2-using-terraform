@@ -53,7 +53,28 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-terraform-creds'
                 ]]) {
-                    bat 'terraform plan -input=false'
+                    bat 'terraform plan -input=false -out=tfplan'
+                    bat 'terraform show -no-color tfplan'
+                }
+            }
+        }
+
+        stage('Manager Approval') {
+            steps {
+                input(
+                    message: 'Review the Terraform plan. Approve to deploy changes to AWS.',
+                    ok: 'Approve and Apply'
+                )
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'aws-terraform-creds'
+                ]]) {
+                    bat 'terraform apply -input=false tfplan'
                 }
             }
         }
@@ -61,7 +82,7 @@ pipeline {
 
     post {
         success {
-            echo 'Terraform validation and plan completed successfully.'
+            echo 'Terraform pipeline completed successfully, including apply.'
         }
 
         failure {
@@ -69,7 +90,7 @@ pipeline {
         }
 
         aborted {
-            echo 'Pipeline was aborted.'
+            echo 'Pipeline was aborted or approval was rejected.'
         }
     }
 }
