@@ -37,3 +37,6 @@ sudo docker run -d \
 
 sudo docker ps
 sudo docker image ls custom-nginx
+
+curl -fsS http://localhost:8080/ >/dev/null
+echo "Nginx is responding successfully on port 8080."
