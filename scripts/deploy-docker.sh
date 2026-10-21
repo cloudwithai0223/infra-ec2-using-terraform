@@ -1,9 +1,30 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 set -euo pipefail
 
 # Install Docker on Ubuntu if it is not already installed.
 if ! command -v docker >/dev/null 2>&1; then
     sudo apt-get update
+    
+# Wait for Ubuntu's background package installation to finish.
+wait_count=0
+
+while pgrep -x apt-get >/dev/null || \
+      pgrep -x apt >/dev/null || \
+      pgrep -x dpkg >/dev/null || \
+      pgrep -x unattended-upgr >/dev/null; do
+
+    wait_count=$((wait_count + 1))
+
+    if [ "$wait_count" -ge 60 ]; then
+        echo "Timed out waiting for Ubuntu package manager." >&2
+        ps -eo pid,etime,cmd | grep -E '[a]pt|[d]pkg|[u]nattended-upgr' || true
+        exit 1
+    fi
+
+    echo "Waiting for Ubuntu package manager... ($wait_count/60)"
+    sleep 10
+done
+
     sudo apt-get install -y ca-certificates curl
     sudo install -m 0755 -d /etc/apt/keyrings
 
