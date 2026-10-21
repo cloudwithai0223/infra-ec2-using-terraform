@@ -1,0 +1,16 @@
+# Terraform-generated files
+.terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Local binaries
+kubectl.exe
+*.exe
+
+# Local backup files
+*.backup
+*.merge-backup*
+source-backup/
