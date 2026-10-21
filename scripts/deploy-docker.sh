@@ -21,14 +21,14 @@ fi
 
 sudo systemctl enable --now docker
 
-# Expect the Docker build context to be copied to /opt/docker-nginx.
+# Build the Docker image on the EC2 instance.
 cd /opt/docker-nginx
-
 sudo docker build -t custom-nginx:1.0 .
 
-# Replace an earlier container, if present.
+# Remove an existing container if present.
 sudo docker rm -f nginx-web 2>/dev/null || true
 
+# Publish host port 8080 to container port 80.
 sudo docker run -d \
     --name nginx-web \
     --restart unless-stopped \
@@ -38,5 +38,6 @@ sudo docker run -d \
 sudo docker ps
 sudo docker image ls custom-nginx
 
+# Verify that Nginx responds locally.
 curl -fsS http://localhost:8080/ >/dev/null
 echo "Nginx is responding successfully on port 8080."
