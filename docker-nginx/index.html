@@ -1,307 +1,586 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bikes - BikerHUB</title>
-    <style>
-        /* Reset styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CareerLaunch - career guidance, interview preparation, learning roadmaps and professional growth resources.">
+<title>CareerLaunch | Build Your Future</title>
+<style>
+:root {
+  --blue: #1769f5;
+  --navy: #10264a;
+  --text: #243956;
+  --muted: #647794;
+  --light: #f1f7ff;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+}
+a { text-decoration: none; color: inherit; }
+.container { width: min(1120px, 90%); margin: auto; }
 
-        /* Background and font styling */
-        body {
-            font-family: Arial, sans-serif;
-            color: #333;
-            background-color: #f5f5f5;
-            overflow-x: hidden;
-        }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  border-bottom: 1px solid #e5ebf5;
+}
+nav {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand {
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.2;
+}
+.brand span { color: var(--blue); }
+.brand small {
+  display: block;
+  font-size: 11px;
+  font-weight: normal;
+  color: var(--muted);
+}
+.navlinks { display: flex; gap: 22px; font-size: 14px; }
+.navlinks a:hover { color: var(--blue); }
+.menu {
+  display: none;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.hero {
+  background: linear-gradient(120deg, #f4f9ff, #dfeeff);
+  padding: 65px 0;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 35px;
+  align-items: center;
+}
+.pill {
+  display: inline-block;
+  padding: 5px 13px;
+  color: #075bd9;
+  background: white;
+  border: 1px solid #c8dcff;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: bold;
+}
+h1 {
+  color: var(--navy);
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -1.8px;
+  margin: 20px 0;
+}
+h1 span { color: var(--blue); }
+.hero p { color: #526985; font-size: 17px; max-width: 570px; }
+.buttons { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 25px; }
+.btn {
+  display: inline-block;
+  padding: 12px 19px;
+  border-radius: 9px;
+  font-weight: bold;
+  font-size: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.primary { background: var(--blue); color: white; }
+.secondary { background: white; border-color: #c9d6e8; color: var(--navy); }
+.btn:hover { opacity: .88; transform: translateY(-1px); }
 
-        /* Navbar styling */
-        .navbar {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            color: white;
-            z-index: 100;
-        }
-        
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            font-size: 1rem;
-        }
+.hero-art {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.orbit {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 48%;
+  background: linear-gradient(135deg, #b9d8ff, #edf5ff);
+  transform: rotate(-10deg);
+}
+.person {
+  z-index: 1;
+  position: relative;
+  width: 175px;
+  height: 230px;
+  background: #a9ceff;
+  border-radius: 100px 100px 25px 25px;
+  overflow: hidden;
+}
+.hair {
+  position: absolute;
+  top: 22px;
+  left: 37px;
+  width: 105px;
+  height: 115px;
+  background: #172b47;
+  border-radius: 50% 50% 35% 35%;
+}
+.face {
+  position: absolute;
+  top: 43px;
+  left: 53px;
+  width: 72px;
+  height: 82px;
+  background: #c38a65;
+  border-radius: 45%;
+}
+.shirt {
+  position: absolute;
+  bottom: -8px;
+  left: 15px;
+  width: 145px;
+  height: 112px;
+  background: #142b4b;
+  border-radius: 55px 55px 0 0;
+}
+.laptop {
+  position: absolute;
+  z-index: 3;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 115px;
+  height: 70px;
+  background: #f8fbff;
+  border: 5px solid #bacbe0;
+  border-radius: 7px;
+}
+.note {
+  z-index: 4;
+  position: absolute;
+  padding: 11px 14px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px #17365c18;
+  font-size: 13px;
+  font-weight: bold;
+}
+.note small { display: block; color: var(--muted); font-weight: normal; }
+.note-left { top: 35px; left: 0; }
+.note-right { bottom: 30px; right: 0; }
 
-        .navbar a:hover {
-            text-decoration: underline;
-        }
+.features { padding: 38px 0; }
+.grid-four {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+.feature-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 17px;
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+.blue { background: #e3efff; color: #1769f5; }
+.green { background: #dcf8ef; color: #0ba77a; }
+.purple { background: #eee7ff; color: #7651e8; }
+.orange { background: #fff0d8; color: #e88a00; }
+h3 { color: var(--navy); margin: 0 0 7px; font-size: 17px; }
+.feature p { color: var(--muted); font-size: 14px; margin: 0; }
 
-        .logo {
-            margin-right: auto;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-        }
+.resources { background: var(--light); padding: 45px 0; }
+.kicker {
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+h2 { color: var(--navy); font-size: 32px; margin: 5px 0 24px; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.card {
+  padding: 20px;
+  background: white;
+  border: 1px solid #e1eaf6;
+  border-radius: 13px;
+  transition: .2s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px #193c7012; }
+.card-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 12px;
+  background: var(--blue);
+  color: white;
+  border-radius: 13px;
+  font-size: 21px;
+}
+.card p { color: var(--muted); font-size: 14px; }
+.card button {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  font-weight: bold;
+  padding: 0;
+  cursor: pointer;
+}
+.card[hidden] { display: none; }
+.search-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 15px;
+  border: 1px solid #cddbed;
+  border-radius: 9px;
+  margin: 0 0 22px;
+  outline-color: var(--blue);
+}
+.cta { padding: 45px 0; }
+.cta-box {
+  background: linear-gradient(115deg, #10264a, #164e9b);
+  color: white;
+  padding: 32px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.cta-box h2 { color: white; margin: 0 0 10px; }
+.cta-box p { color: #d9e8ff; margin: 0; }
+.cta-box .btn { background: white; color: #164e9b; white-space: nowrap; }
 
-        /* Full cover slider styling */
-        .slider {
-            position: relative;
-            width: 100%;
-            height: 100vh; /* Full screen */
-            overflow: hidden;
-        }
+.about { text-align: center; padding: 35px 0 55px; }
+.about p { max-width: 760px; margin: auto; color: var(--muted); }
 
-        .slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            width: 500%; /* Adjust based on the number of slides */
-        }
+footer { background: #0b1d3a; color: #dce8fb; padding: 28px 0 15px; }
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.footer-links { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; }
+.footer-links a:hover { color: #82b6ff; }
+.footer-bottom {
+  border-top: 1px solid #ffffff22;
+  padding-top: 14px;
+  color: #adbed8;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+.footer-bottom p { margin: 0; }
 
-        .slide {
-            min-width: 100%;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-        }
-
-        .slide:nth-child(1) { background-image: url('https://wallpapers.com/images/hd/4k-bike-rider-on-a-ducati-tzi93k90jys7izss.jpg'); }
-        .slide:nth-child(2) { background-image: url('assets/bike.png'); }
-        .slide:nth-child(3) { background-image: url('assets/b.png'); }
-        .slide:nth-child(4) { background-image: url('assets/trending4.jpg'); }
-        .slide:nth-child(5) { background-image: url('assets/trending5.jpg'); }
-
-        /* Arrow buttons for the slider */
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2rem;
-            color: white;
-            background: rgba(0,0,0,0.5);
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
-        }
-        .prev { left: 10px; }
-        .next { right: 10px; }
-
-        /* Bike cards styling */
-        .card-section {
-            padding: 40px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-
-        .card {
-            background-color: white;
-            width: 250px;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.4s;
-            transform-style: preserve-3d;
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: rotateY(180deg);
-        }
-
-        .card .front, .card .back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-        }
-
-        .card .back {
-            background-color: #f05a28;
-            color: white;
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: white;
-            color: #f05a28;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .card-section h2 {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 2rem;
-            color: #333;
-        }
-
-        /* Footer styling */
-        .footer {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-social img {
-            width: 24px;
-            height: 24px;
-            margin: 0 5px;
-        }
-
-        .newsletter {
-            display: flex;
-        }
-
-        .newsletter input[type="email"] {
-            padding: 5px;
-            border: none;
-            outline: none;
-            border-radius: 4px 0 0 4px;
-        }
-
-        .newsletter button {
-            padding: 5px;
-            background-color: #f05a28;
-            border: none;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-        }
-    </style>
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #07162bd9;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-bg.open { display: flex; }
+.modal {
+  width: min(550px, 100%);
+  max-height: 85vh;
+  overflow: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+}
+.modal h2 { font-size: 25px; margin: 0 0 15px; }
+.modal p, .modal li { color: #526783; }
+.close {
+  float: right;
+  border: 0;
+  background: #edf3fb;
+  border-radius: 8px;
+  padding: 7px 11px;
+  cursor: pointer;
+}
+@media(max-width:900px) {
+  .navlinks { gap: 12px; }
+  .grid-four, .cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width:650px) {
+  nav { flex-wrap: wrap; padding: 13px 0; }
+  .menu { display: block; }
+  .navlinks { display: none; width: 100%; flex-direction: column; padding: 12px 0; }
+  .navlinks.show { display: flex; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero { padding: 35px 0; }
+  .hero-art { min-height: 280px; }
+  .grid-four, .cards { grid-template-columns: 1fr; }
+  .cta-box, .footer-top, .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .cta-box { padding: 25px; }
+  h2 { font-size: 27px; }
+}
+</style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <a href="index.html" class="logo">BikerHUB</a>
-        <a href="home.html">Home</a>
-        <a href="bikes.html">Bikes</a>
-        <a href="signup.html">Sign Up</a>
-        <a href="login.html">Login</a>
+<header>
+  <nav class="container">
+    <a class="brand" href="#home">Career<span>Launch</span>
+      <small>Learn · Grow · Build Your Future</small>
+    </a>
+    <button class="menu" id="menuBtn">☰ Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a href="#home">Home</a>
+      <a href="#tools">Career Tools</a>
+      <a href="#learning">Learning</a>
+      <a href="#jobs">Job Resources</a>
+      <a href="#about">About</a>
     </div>
+  </nav>
+</header>
 
-    <!-- Full Cover Slider -->
-    <div class="slider">
-        <div class="slides">
-            <div class="slide">Trending Bike 1</div>
-            <div class="slide">Trending Bike 2</div>
-            <div class="slide">Trending Bike 3</div>
-            <div class="slide">Trending Bike 4</div>
-            <div class="slide">Trending Bike 5</div>
-        </div>
-        <button class="slider-btn prev" onclick="prevSlide()">&#10094;</button>
-        <button class="slider-btn next" onclick="nextSlide()">&#10095;</button>
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <span class="pill">Your Career. Our Mission.</span>
+      <h1>Build Your Career<br><span>Step by Step</span></h1>
+      <p>Practical guidance, useful tools, and trusted resources to help you learn new skills, improve your resume, prepare for interviews, and discover your next opportunity — all in one place.</p>
+      <div class="buttons">
+        <a class="btn primary" href="#tools">Explore Career Tools →</a>
+        <a class="btn secondary" href="#learning">Browse Learning Resources</a>
+      </div>
     </div>
-
-    <!-- New Bike Collection Section (Buy Bikes) -->
-    <div class="card-section">
-        <h2>New Bike Collection</h2>
-        <div class="card">
-            <div class="front">Bike Model 1</div>
-            <div class="back">
-                <p>Details about Bike Model 1</p>
-                <button>Buy Now</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="front">Bike Model 2</div>
-            <div class="back">
-                <p>Details about Bike Model 2</p>
-                <button>Buy Now</button>
-            </div>
-        </div>
-        <!-- Add more bike cards as needed -->
+    <div class="hero-art">
+      <div class="orbit"></div>
+      <div class="note note-left">✦ Keep learning<small>Small steps. Real progress.</small></div>
+      <div class="person">
+        <div class="hair"></div><div class="face"></div>
+        <div class="shirt"></div><div class="laptop"></div>
+      </div>
+      <div class="note note-right">↗ Grow your skills<small>Build a brighter future</small></div>
     </div>
+  </div>
+</section>
 
-    <!-- Sell Your Bike Section -->
-    <div class="card-section">
-        <h2>Sell Your Bike</h2>
-        <div class="card">
-            <div class="front">Bike Model for Sale 1</div>
-            <div class="back">
-                <p>Details about selling Bike Model 1</p>
-                <button>Sell Now</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="front">Bike Model for Sale 2</div>
-            <div class="back">
-                <p>Details about selling Bike Model 2</p>
-                <button>Sell Now</button>
-            </div>
-        </div>
-        <!-- Add more sell cards as needed -->
+<section class="features" id="tools">
+  <div class="container grid-four">
+    <article>
+      <div class="feature-icon blue">▤</div>
+      <h3>Resume Builder</h3>
+      <p>Organize your experience and create a professional resume outline.</p>
+    </article>
+    <article>
+      <div class="feature-icon green">☏</div>
+      <h3>Interview Preparation</h3>
+      <p>Practice common questions and learn how to structure strong answers.</p>
+    </article>
+    <article>
+      <div class="feature-icon purple">◇</div>
+      <h3>Learning Roadmaps</h3>
+      <p>Follow clear learning paths to develop useful, in-demand skills.</p>
+    </article>
+    <article>
+      <div class="feature-icon orange">▣</div>
+      <h3>Job & Internship Links</h3>
+      <p>Explore trusted job platforms and apply through official websites.</p>
+    </article>
+  </div>
+</section>
+
+<section class="resources" id="learning">
+  <div class="container">
+    <div class="kicker">Popular resources</div>
+    <h2>Start Your Growth Journey</h2>
+    <input class="search-box" id="searchInput" type="search"
+      placeholder="Search DevOps, cloud, interviews, resume...">
+    <div class="cards" id="cards">
+      <article class="card" data-search="devops docker kubernetes jenkins terraform linux">
+        <div class="card-icon">⌘</div>
+        <h3>DevOps Learning Path</h3>
+        <p>Learn Linux, Git, Docker, Kubernetes, CI/CD and Terraform step by step.</p>
+        <button data-modal="devops">View roadmap →</button>
+      </article>
+      <article class="card" data-search="cloud aws azure gcp certification">
+        <div class="card-icon" style="background:#7651e8">☁</div>
+        <h3>Cloud Career Guide</h3>
+        <p>Explore AWS, Azure, GCP fundamentals and cloud certification paths.</p>
+        <button data-modal="cloud">Explore guide →</button>
+      </article>
+      <article class="card" data-search="interview questions technical behavioral preparation">
+        <div class="card-icon" style="background:#0ba77a">♧</div>
+        <h3>Interview Preparation</h3>
+        <p>Prepare for technical and behavioral interviews with a simple framework.</p>
+        <button data-modal="interview">Practice questions →</button>
+      </article>
+      <article class="card" data-search="resume cv template professional job application">
+        <div class="card-icon" style="background:#df3266">✎</div>
+        <h3>Resume Checklist</h3>
+        <p>Make your resume clear, achievement-focused and easy for recruiters to scan.</p>
+        <button data-modal="resume">Open checklist →</button>
+      </article>
     </div>
+    <p id="noResults" hidden>No matching resources found. Try a different search term.</p>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <div class="footer">
-        <div class="footer-content">
-            <div class="footer-contact">
-                <p>123 Bike Street, Dhaka, Bangladesh</p>
-                <p>Email: info@bikerhub.com | Phone: +8801234567890</p>
-            </div>
-            <div class="footer-social">
-                <a href="#"><img src="assets/facebook-icon.png" alt="Facebook"></a>
-                <a href="#"><img src="assets/instagram-icon.png" alt="Instagram"></a>
-                <a href="#"><img src="assets/twitter-icon.png" alt="Twitter"></a>
-            </div>
-            <div class="newsletter">
-                <input type="email" placeholder="Subscribe to our newsletter">
-                <button>Subscribe</button>
-            </div>
-        </div>
-        <p>&copy; 2024 BikerHUB. All rights reserved.</p>
+<section class="cta" id="jobs">
+  <div class="container cta-box">
+    <div>
+      <h2>Your next opportunity starts with one step.</h2>
+      <p>Build a learning plan, practice your skills, and explore opportunities through established job platforms. Verify job details on the official employer website.</p>
     </div>
+    <a class="btn" href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener noreferrer">Explore Jobs ↗</a>
+  </div>
+</section>
 
-    <script>
-        let currentSlide = 0;
-        function showSlide(slideIndex) {
-            const slides = document.querySelector('.slides');
-            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
-        }
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % document.querySelector('.slides').children.length;
-            showSlide(currentSlide);
-        }
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + document.querySelector('.slides').children.length) % document.querySelector('.slides').children.length;
-            showSlide(currentSlide);
-        }
-    </script>
+<section class="about" id="about">
+  <div class="container">
+    <div class="kicker">About CareerLaunch</div>
+    <h2>Useful guidance for every career stage.</h2>
+    <p>CareerLaunch is a career resource hub for students, fresh graduates, career changers, and experienced professionals. Use the resources to plan what to learn next. This demo does not collect personal data or provide live job listings.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <a class="brand" style="color:white" href="#home">Career<span>Launch</span>
+        <small style="color:#bdcce2">Learn · Grow · Build Your Future</small>
+      </a>
+      <div class="footer-links">
+        <a href="#home">Home</a><a href="#tools">Career Tools</a>
+        <a href="#learning">Learning</a><a href="#jobs">Job Resources</a>
+        <a href="#about">About</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> CareerLaunch. Built to help people grow.</p>
+      <p>Learn something today. Build something tomorrow.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="close" id="closeModal" aria-label="Close">✕</button>
+    <h2 id="modalTitle">Career Resource</h2>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const resources = {
+  devops: {
+    title: "DevOps Learning Roadmap",
+    body: `<ol>
+      <li><b>Foundations:</b> Linux, networking, Bash and Git.</li>
+      <li><b>Containers:</b> Docker images, containers, volumes and networks.</li>
+      <li><b>CI/CD:</b> Build, test and deploy with Jenkins or GitHub Actions.</li>
+      <li><b>Orchestration:</b> Kubernetes workloads, services and troubleshooting.</li>
+      <li><b>Infrastructure as Code:</b> Terraform, modules, state and environments.</li>
+      <li><b>Observability:</b> Metrics, logs, alerts and incident response.</li>
+    </ol><p>Build a small project for each topic and document what you learn.</p>`
+  },
+  cloud: {
+    title: "Cloud Career Guide",
+    body: `<ol>
+      <li>Learn VPC/VNet, subnets, routes, DNS and load balancers.</li>
+      <li>Understand compute, storage, IAM and network security.</li>
+      <li>Deploy an application using infrastructure as code.</li>
+      <li>Learn monitoring, backups, availability and cost management.</li>
+      <li>Build a project before pursuing a certification.</li>
+    </ol>
+    <p>Official learning portals:
+    <a href="https://skillbuilder.aws/" target="_blank" rel="noopener">AWS Skill Builder</a> ·
+    <a href="https://learn.microsoft.com/training/azure/" target="_blank" rel="noopener">Microsoft Learn</a> ·
+    <a href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener">Google Cloud</a>.</p>`
+  },
+  interview: {
+    title: "Interview Practice",
+    body: `<p>Practice answering these questions aloud using examples from your experience.</p>
+    <ol>
+      <li>Tell me about a production issue you diagnosed and resolved.</li>
+      <li>How would you troubleshoot a Kubernetes pod stuck in Pending?</li>
+      <li>How do you safely manage secrets in a CI/CD pipeline?</li>
+      <li>Describe a deployment you automated and its impact.</li>
+      <li>How do you monitor service health and respond to alerts?</li>
+    </ol><p>For experience questions, use STAR: Situation, Task, Action, Result.</p>`
+  },
+  resume: {
+    title: "Resume Quality Checklist",
+    body: `<ul>
+      <li>Use clear contact details and a professional headline.</li>
+      <li>Tailor skills to the job description without keyword stuffing.</li>
+      <li>Describe achievements with actions, technologies and results.</li>
+      <li>Include relevant projects and links to code where appropriate.</li>
+      <li>Keep formatting consistent and proofread carefully.</li>
+      <li>Never include passwords, tokens or confidential employer information.</li>
+    </ul>`
+  }
+};
+
+const modalBg = document.getElementById("modalBg");
+document.querySelectorAll("[data-modal]").forEach(button => {
+  button.addEventListener("click", () => {
+    const resource = resources[button.dataset.modal];
+    document.getElementById("modalTitle").textContent = resource.title;
+    document.getElementById("modalContent").innerHTML = resource.body;
+    modalBg.classList.add("open");
+  });
+});
+function closeModal() { modalBg.classList.remove("open"); }
+document.getElementById("closeModal").addEventListener("click", closeModal);
+modalBg.addEventListener("click", event => {
+  if (event.target === modalBg) closeModal();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeModal();
+});
+
+document.getElementById("menuBtn").addEventListener("click", () => {
+  document.getElementById("navlinks").classList.toggle("show");
+});
+document.querySelectorAll("#navlinks a").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("navlinks").classList.remove("show");
+  });
+});
+
+document.getElementById("searchInput").addEventListener("input", event => {
+  const query = event.target.value.toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll(".card").forEach(card => {
+    const match = (card.innerText + " " + card.dataset.search)
+      .toLowerCase().includes(query);
+    card.hidden = !match;
+    if (match) visible++;
+  });
+  document.getElementById("noResults").hidden = visible > 0;
+});
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
