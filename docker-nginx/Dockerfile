@@ -1,5 +1,6 @@
-LABEL maintainer="AI"
 FROM nginx:alpine
+
+LABEL maintainer="AI"
 
 COPY index.html /usr/share/nginx/html/index.html
 
